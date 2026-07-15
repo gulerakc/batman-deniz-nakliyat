@@ -219,9 +219,13 @@
   .contact-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px;}
   .contact-info .item{margin-bottom:26px;}
   .contact-info .item .k{font-family:'IBM Plex Mono', monospace; color:var(--sea); font-size:0.8rem; letter-spacing:1px; text-transform:uppercase; display:block; margin-bottom:6px;}
-  .contact-info .item .v{font-size:1.15rem; font-weight:500;}
+  .contact-info .item .v{display:block; font-size:1.15rem; font-weight:500; margin-top:6px;}
+  .contact-info .item .v:first-of-type{margin-top:0;}
   .contact-info .item .v a{border-bottom:1px solid transparent; transition:border-color .2s;}
   .contact-info .item .v a:hover{border-color:var(--kraft); color:var(--kraft);}
+  .contact-info .item .contact-person{
+    display:block; margin-top:4px; font-size:0.92rem; color:var(--sea);
+  }
   .note{
     margin-top:20px; padding:14px 16px; background:rgba(243,236,225,0.08);
     border-left:3px solid var(--kraft); font-size:0.88rem; color:var(--paper-dim);
@@ -416,8 +420,8 @@
         <div class="contact-info">
           <div class="item">
             <span class="k">Telefon</span>
-            <span class="v"><a href="tel:+905315068090">0531 506 80 90</a> - Hayrettin Kara</span>
-            <span class="v"><a href="tel:+905374910426">0537 491 04 26</a> - Siraç Yaşar</span>
+            <span class="v"><a href="tel:+905315068090">0531 506 80 90</a> — Hayrettin Kara</span>
+            <span class="v"><a href="tel:+905374910426">0537 491 04 26</a> — Sirac Yaşar</span>
           </div>
           <div class="item">
             <span class="k">Çalışma Saatleri</span>
