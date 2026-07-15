@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Batman Deniz Nakliyat | Şehir İçi ve Şehir Dışı Evden Eve Nakliyat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#0B2540;
+    --navy-mid:#163A5C;
+    --paper:#F3ECE1;
+    --paper-dim:#E9DFCE;
+    --kraft:#C97A3D;
+    --kraft-dark:#A85F2C;
+    --ink:#1B1F23;
+    --sea:#6E9C97;
+    --line: rgba(243,236,225,0.25);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{
+    font-family:'Big Shoulders Display', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    line-height:0.95;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  /* Skip link */
+  .skip-link{position:absolute; left:-999px; top:0; background:var(--kraft); color:var(--navy-deep); padding:10px 16px; z-index:200;}
+  .skip-link:focus{left:16px; top:16px;}
+
+  /* Header */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(11,37,64,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px; max-width:1120px; margin:0 auto;
+  }
+  .brand{color:var(--paper); font-family:'Big Shoulders Display', sans-serif; font-weight:900; font-size:1.35rem; letter-spacing:0.5px;}
+  .brand span{color:var(--kraft);}
+  nav.links{display:flex; gap:28px;}
+  nav.links a{color:var(--paper); font-size:0.92rem; font-weight:500; opacity:0.85; transition:opacity .2s;}
+  nav.links a:hover, nav.links a:focus-visible{opacity:1; color:var(--kraft);}
+  .nav-cta{
+    background:var(--kraft); color:var(--navy-deep); font-weight:600;
+    padding:9px 18px; border-radius:2px; font-size:0.9rem;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--kraft-dark); color:var(--paper);}
+  .menu-btn{display:none; background:none; border:none; color:var(--paper); font-size:1.6rem; cursor:pointer;}
+
+  /* HERO */
+  .hero{
+    background:var(--navy-deep);
+    color:var(--paper);
+    padding:150px 0 90px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{position:relative; z-index:2;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--sea);
+    font-size:0.85rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:""; width:28px; height:1px; background:var(--sea); display:inline-block;}
+  .hero h1{
+    font-size:clamp(2.6rem, 7vw, 5.2rem);
+    font-weight:900;
+    max-width:820px;
+  }
+  .hero h1 em{font-style:normal; color:var(--kraft);}
+  .hero p.lead{
+    margin-top:26px;
+    max-width:520px;
+    font-size:1.1rem;
+    color:var(--paper-dim);
+  }
+  .hero-ctas{margin-top:38px; display:flex; gap:16px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--kraft); color:var(--navy-deep); font-weight:600;
+    padding:14px 26px; border-radius:2px; font-size:0.98rem;
+    border:1px solid var(--kraft);
+    transition: background .2s, color .2s;
+  }
+  .btn-primary:hover, .btn-primary:focus-visible{background:transparent; color:var(--kraft);}
+  .btn-ghost{
+    padding:14px 26px; border-radius:2px; font-size:0.98rem; font-weight:600;
+    border:1px solid var(--line); color:var(--paper);
+    transition: border-color .2s, background .2s;
+  }
+  .btn-ghost:hover, .btn-ghost:focus-visible{border-color:var(--paper); background:rgba(243,236,225,0.06);}
+
+  /* Route animation */
+  .route{
+    margin-top:70px;
+    position:relative;
+    height:70px;
+  }
+  .route-line{
+    position:absolute; top:50%; left:0; right:0; height:2px;
+    background-image:linear-gradient(to right, var(--line) 60%, transparent 0%);
+    background-size:14px 2px;
+    background-repeat:repeat-x;
+    transform:translateY(-50%);
+  }
+  .route-pin{
+    position:absolute; top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+  }
+  .route-pin .dot{width:10px; height:10px; border-radius:50%; background:var(--sea); box-shadow:0 0 0 4px rgba(110,156,151,0.2);}
+  .route-pin.origin{left:0;}
+  .route-pin.dest{right:0;}
+  .route-pin .label{font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--paper-dim); white-space:nowrap;}
+  .truck{
+    position:absolute; top:50%; transform:translate(-50%,-50%);
+    width:34px; height:auto; color:var(--kraft);
+    animation:drive 5.5s linear infinite;
+  }
+  @keyframes drive{
+    0%{left:2%;}
+    48%{left:98%;}
+    50%{left:98%;}
+    98%{left:2%;}
+    100%{left:2%;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .truck{animation:none; left:50%;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* Sections */
+  section{padding:90px 0;}
+  .section-head{max-width:640px; margin-bottom:56px;}
+  .section-head .eyebrow{color:var(--kraft-dark);}
+  .section-head h2{font-size:clamp(2rem, 4.5vw, 3rem); color:var(--navy-deep);}
+  .section-head p{margin-top:16px; color:#4A4F55; font-size:1.05rem;}
+
+  /* Services - stops along a route */
+  .services{background:var(--paper);}
+  .stops{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:0;
+    border-top:2px dashed var(--kraft);
+  }
+  .stop{
+    padding:34px 22px 0;
+    border-left:1px solid rgba(27,31,35,0.08);
+    position:relative;
+  }
+  .stop:first-child{border-left:none;}
+  .stop::before{
+    content:attr(data-stop);
+    position:absolute; top:-13px; left:22px;
+    background:var(--kraft); color:var(--paper);
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; font-weight:500;
+    padding:3px 8px; border-radius:1px;
+  }
+  .stop h3{font-size:1.35rem; color:var(--navy-deep); margin-bottom:10px; font-weight:700;}
+  .stop p{color:#4A4F55; font-size:0.95rem;}
+
+  @media (max-width:700px){
+    .stops{grid-template-columns:1fr; border-top:none;}
+    .stop{border-left:none; border-top:2px dashed var(--kraft); padding-top:30px;}
+  }
+
+  /* Why us */
+  .why{background:var(--navy-deep); color:var(--paper);}
+  .why .section-head h2{color:var(--paper);}
+  .why .section-head p{color:var(--paper-dim);}
+  .why .section-head .eyebrow{color:var(--sea);}
+  .reasons{display:grid; grid-template-columns:repeat(4,1fr); gap:32px;}
+  .reason .num{font-family:'IBM Plex Mono', monospace; color:var(--kraft); font-size:0.85rem;}
+  .reason h3{font-size:1.5rem; margin:10px 0 10px; font-weight:700;}
+  .reason p{color:var(--paper-dim); font-size:0.95rem;}
+  @media (max-width:900px){.reasons{grid-template-columns:1fr 1fr; row-gap:40px;}}
+  @media (max-width:560px){.reasons{grid-template-columns:1fr;}}
+
+  /* Process */
+  .process{background:var(--paper-dim);}
+  .steps{position:relative; padding-left:0;}
+  .step{
+    display:grid; grid-template-columns:110px 1fr; gap:24px;
+    padding:26px 0; border-top:1px solid rgba(27,31,35,0.1);
+  }
+  .step:last-child{border-bottom:1px solid rgba(27,31,35,0.1);}
+  .step .stage{font-family:'IBM Plex Mono', monospace; color:var(--kraft-dark); font-size:0.85rem; align-self:start;}
+  .step h3{font-size:1.4rem; color:var(--navy-deep); margin-bottom:6px;}
+  .step p{color:#4A4F55; font-size:0.95rem; max-width:560px;}
+  @media (max-width:560px){.step{grid-template-columns:1fr; gap:6px;}}
+
+  /* Contact */
+  .contact{background:var(--navy-deep); color:var(--paper);}
+  .contact .section-head h2{color:var(--paper);}
+  .contact .section-head p{color:var(--paper-dim);}
+  .contact-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px;}
+  .contact-info .item{margin-bottom:26px;}
+  .contact-info .item .k{font-family:'IBM Plex Mono', monospace; color:var(--sea); font-size:0.8rem; letter-spacing:1px; text-transform:uppercase; display:block; margin-bottom:6px;}
+  .contact-info .item .v{font-size:1.15rem; font-weight:500;}
+  .contact-info .item .v a{border-bottom:1px solid transparent; transition:border-color .2s;}
+  .contact-info .item .v a:hover{border-color:var(--kraft); color:var(--kraft);}
+  .note{
+    margin-top:20px; padding:14px 16px; background:rgba(243,236,225,0.08);
+    border-left:3px solid var(--kraft); font-size:0.88rem; color:var(--paper-dim);
+  }
+  form{display:flex; flex-direction:column; gap:14px;}
+  form label{font-size:0.85rem; color:var(--paper-dim); margin-bottom:4px; display:block;}
+  form input, form textarea, form select{
+    width:100%; padding:12px 14px; background:rgba(243,236,225,0.06);
+    border:1px solid var(--line); color:var(--paper); border-radius:2px;
+    font-family:'Work Sans', sans-serif; font-size:0.95rem;
+  }
+  form input:focus-visible, form textarea:focus-visible, form select:focus-visible{
+    outline:2px solid var(--kraft); outline-offset:1px; border-color:var(--kraft);
+  }
+  form button{
+    margin-top:6px; background:var(--kraft); color:var(--navy-deep); font-weight:600;
+    padding:14px 20px; border:none; border-radius:2px; cursor:pointer; font-size:0.98rem;
+    transition:background .2s;
+  }
+  form button:hover, form button:focus-visible{background:var(--kraft-dark);}
+  @media (max-width:800px){.contact-grid{grid-template-columns:1fr; gap:40px;}}
+
+  /* Footer */
+  footer{background:#081A2E; color:var(--paper-dim); padding:30px 0; font-size:0.85rem;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+
+  /* Mobile nav */
+  @media (max-width:760px){
+    nav.links{display:none;}
+    .menu-btn{display:block;}
+    .nav-cta{display:none;}
+  }
+
+  :focus-visible{outline:2px solid var(--kraft); outline-offset:2px;}
+</style>
+</head>
+<body>
+<a href="#icerik" class="skip-link">İçeriğe geç</a>
+
+<header>
+  <div class="nav">
+    <a href="#top" class="brand">BATMAN <span>DENİZ</span> NAKLİYAT</a>
+    <nav class="links" aria-label="Ana menü">
+      <a href="#hizmetler">Hizmetler</a>
+      <a href="#neden-biz">Neden Biz</a>
+      <a href="#surec">Süreç</a>
+      <a href="#iletisim">İletişim</a>
+    </nav>
+    <a href="#iletisim" class="nav-cta">Teklif Al</a>
+    <button class="menu-btn" aria-label="Menüyü aç">☰</button>
+  </div>
+</header>
+
+<main id="icerik">
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="eyebrow">Batman merkezli · 2003'ten beri yollarda</div>
+      <h1>Eviniz nereye<br>giderse gitsin, <em>biz oradayız.</em></h1>
+      <p class="lead">Batman Deniz Nakliyat olarak şehir içi ve şehir dışı evden eve nakliyatı, ambalajından yerleşimine kadar tek elden ve zamanında yönetiyoruz.</p>
+      <div class="hero-ctas">
+        <a href="#iletisim" class="btn-primary">Ücretsiz Keşif İste</a>
+        <a href="#hizmetler" class="btn-ghost">Hizmetleri Gör</a>
+      </div>
+
+      <div class="route" aria-hidden="true">
+        <div class="route-line"></div>
+        <div class="route-pin origin">
+          <span class="dot"></span>
+          <span class="label">BATMAN</span>
+        </div>
+        <div class="route-pin dest">
+          <span class="dot"></span>
+          <span class="label">HER İL</span>
+        </div>
+        <svg class="truck" viewBox="0 0 64 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="10" width="34" height="18" rx="1.5" fill="currentColor"/>
+          <path d="M35 16H50L59 24V28H35V16Z" fill="currentColor"/>
+          <circle cx="14" cy="30" r="5" fill="#0B2540" stroke="currentColor" stroke-width="2"/>
+          <circle cx="49" cy="30" r="5" fill="#0B2540" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- HİZMETLER -->
+  <section class="services" id="hizmetler">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Hizmetlerimiz</div>
+        <h2>Güzergahın her durağında yanınızdayız</h2>
+        <p>İster sokağın karşısına, ister başka bir şehre taşının — süreci baştan sona aynı ekip yürütür.</p>
+      </div>
+      <div class="stops">
+        <div class="stop" data-stop="ŞEHİR İÇİ">
+          <h3>Evden Eve Nakliyat</h3>
+          <p>Batman içindeki taşınmalarınızda aynı gün planlama ve montaj dahil hizmet.</p>
+        </div>
+        <div class="stop" data-stop="ŞEHİR DIŞI">
+          <h3>Şehirlerarası Taşımacılık</h3>
+          <p>Türkiye'nin her iline özel araç planlaması ile güvenli ve takipli taşıma.</p>
+        </div>
+        <div class="stop" data-stop="KORUMA">
+          <h3>Ambalajlama & Paketleme</h3>
+          <p>Kırılacak eşyalar, beyaz eşya ve mobilyalar için özel ambalaj malzemesi ve teknik.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEDEN BİZ -->
+  <section class="why" id="neden-biz">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Neden Batman Deniz</div>
+        <h2>Yolun tecrübeli ellerinde</h2>
+      </div>
+      <div class="reasons">
+        <div class="reason">
+          <span class="num mono">01</span>
+          <h3>Deneyimli Ekip</h3>
+          <p>Yıllardır aynı güzergahlarda çalışan, eşyanızın değerini bilen bir kadro.</p>
+        </div>
+        <div class="reason">
+          <span class="num mono">02</span>
+          <h3>Zamanında Teslimat</h3>
+          <p>Netleştirdiğimiz tarih ve saatte, söz verdiğimiz gibi kapınızdayız.</p>
+        </div>
+        <div class="reason">
+          <span class="num mono">03</span>
+          <h3>Şeffaf Fiyatlandırma</h3>
+          <p>Keşif sonrası net teklif; sürpriz ek ücret yok.</p>
+        </div>
+        <div class="reason">
+          <span class="num mono">04</span>
+          <h3>Uçtan Uca Takip</h3>
+          <p>Yükleme başından yerleşim sonuna kadar aynı ekip, aynı sorumluluk.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SÜREÇ -->
+  <section class="process" id="surec">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Nasıl çalışıyoruz</div>
+        <h2>Kapınızdan yeni adresinize dört durak</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="stage mono">DURAK 01</span>
+          <div>
+            <h3>Keşif ve Teklif</h3>
+            <p>Evinizi yerinde ya da telefonda değerlendirir, net bir fiyat ve tarih sunarız.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="stage mono">DURAK 02</span>
+          <div>
+            <h3>Paketleme</h3>
+            <p>Kırılacak ve hassas eşyalarınızı uygun malzemeyle güvenle paketleriz.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="stage mono">DURAK 03</span>
+          <div>
+            <h3>Taşıma</h3>
+            <p>Şehir içi ya da şehirlerarası güzergahta eşyalarınız güvenli araçlarla yola çıkar.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="stage mono">DURAK 04</span>
+          <div>
+            <h3>Yerleşim</h3>
+            <p>Yeni adresinizde eşyalarınızı istediğiniz düzende yerleştirir, montajı tamamlarız.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- İLETİŞİM -->
+  <section class="contact" id="iletisim">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">İletişim</div>
+        <h2>Taşınma tarihinizi konuşalım</h2>
+        <p>Ücretsiz keşif ve teklif için bize ulaşın.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="item">
+            <span class="k">Telefon</span>
+            <span class="v"><a href="tel:+905315068090">0 531 506 80 90</a></span>
+          </div>
+          <div class="item">
+            <span class="k">Çalışma Saatleri</span>
+            <span class="v">Her gün 08:00 – 20:00</span>
+          </div>
+        </div>
+        <form aria-label="Teklif formu" onsubmit="return false;">
+          <div>
+            <label for="ad">Ad Soyad</label>
+            <input id="ad" name="ad" type="text" required>
+          </div>
+          <div>
+            <label for="tel">Telefon</label>
+            <input id="tel" name="tel" type="tel" required>
+          </div>
+          <div>
+            <label for="tur">Taşınma Türü</label>
+            <select id="tur" name="tur">
+              <option>Şehir İçi</option>
+              <option>Şehir Dışı</option>
+            </select>
+          </div>
+          <div>
+            <label for="mesaj">Mesajınız</label>
+            <textarea id="mesaj" name="mesaj" rows="4"></textarea>
+          </div>
+          <button type="submit">Teklif İste</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Batman Deniz Nakliyat. Tüm hakları saklıdır.</span>
+    <span>Batman içi ve şehirlerarası evden eve nakliyat</span>
+  </div>
+</footer>
+
+</body>
+</html>
